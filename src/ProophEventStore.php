@@ -169,6 +169,40 @@ final class ProophEventStore implements EventStore
             )
         );
     }
+
+    /**
+     * @param string $streamName
+     * @param int $skip
+     * @param int|null $limit
+     * @return \Iterator
+     */
+    public function loadStreamEvents(string $streamName, int $skip = 0, int $limit = null): \Iterator
+    {
+        return $this->prepareEventMapping(
+            $this->pes->load(
+                new StreamName($streamName),
+                $skip,
+                $limit
+            )
+        );
+    }
+
+    /**
+     * @param string $streamName
+     * @param int $skip
+     * @param int|null $limit
+     * @return \Iterator
+     */
+    public function loadStreamEventsReverse(string $streamName, int $skip = 0, int $limit = null): \Iterator
+    {
+        return $this->prepareEventMapping(
+            $this->pes->loadReverse(
+                new StreamName($streamName),
+                $skip,
+                $limit
+            )
+        );
+    }
     
     private function prepareEventMapping(\Iterator $events): \Iterator
     {
